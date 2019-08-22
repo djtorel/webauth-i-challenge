@@ -5,8 +5,7 @@ const { getUsers, addUser } = require('../../data/models/usersModel');
 
 router.get('/', async (req, res) => {
   try {
-    const users = await getUsers();
-    res.status(200).json(users);
+    res.status(200).json(await getUsers());
   } catch (err) {
     res.status(500).json({ message: 'Unable to retrieve users' });
   }
@@ -14,13 +13,12 @@ router.get('/', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const userData = req.body;
-    userData.password = bcrypt.hashSync(userData.password, 10);
-    const newUser = await addUser(userData);
-
-    res.status(201).json(newUser);
+    const userData = {
+      ...req.body,
+      password: await bcrypt.hashSync(req.body.password, 10),
+    };
+    res.status(201).json(await addUser(userData));
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Unable to create new user' });
   }
 });
