@@ -2,9 +2,9 @@ const db = require('../dbConfig');
 
 const getUsers = () => db('users');
 
-const getUserById = id =>
+const getUserBy = filter =>
   db('users')
-    .where({ id })
+    .where(filter)
     .first();
 
 const addUser = user =>
@@ -14,6 +14,6 @@ const addUser = user =>
 
 module.exports = {
   getUsers,
-  getUserById,
+  getUserBy,
   addUser,
 };
