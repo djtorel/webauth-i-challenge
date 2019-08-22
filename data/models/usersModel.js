@@ -10,7 +10,7 @@ const getUserBy = filter =>
 const addUser = user =>
   db('users')
     .insert(user)
-    .then(([id]) => getUserById(id));
+    .then(([id]) => getUserBy({ id }));
 
 module.exports = {
   getUsers,
