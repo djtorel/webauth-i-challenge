@@ -7,7 +7,9 @@ const {
   addUser,
 } = require('../../data/models/usersModel');
 
-router.get('/users', async (req, res) => {
+const auth = require('../../middleware/auth');
+
+router.get('/users', auth, async (req, res) => {
   try {
     res.status(200).json(await getUsers());
   } catch (err) {
@@ -43,6 +45,19 @@ router.post('/login', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: 'Unable to login' });
+  }
+});
+
+router.delete('/logout', (req, res) => {
+  if (req.session) {
+    console.log(req.session);
+    req.session.destroy(err =>
+      err
+        ? res.status(400).json({ message: 'Could not log out' })
+        : res.json({ message: 'logged out' })
+    );
+  } else {
+    res.end();
   }
 });
 
