@@ -1,6 +1,6 @@
 const db = require('../dbConfig');
 
-const getUsers = () => db('users');
+const getUsers = () => db('users').select('id', 'username');
 
 const getUserBy = filter =>
   db('users')

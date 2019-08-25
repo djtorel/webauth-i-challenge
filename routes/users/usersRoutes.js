@@ -23,7 +23,6 @@ router.post('/register', async (req, res) => {
     };
     res.status(201).json(await addUser(userData));
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Unable to create new user' });
   }
 });
