@@ -49,16 +49,13 @@ router.post('/login', async (req, res) => {
 });
 
 router.delete('/logout', (req, res) => {
-  if (req.session) {
-    console.log(req.session);
-    req.session.destroy(err =>
-      err
-        ? res.status(400).json({ message: 'Could not log out' })
-        : res.json({ message: 'logged out' })
-    );
-  } else {
-    res.end();
-  }
+  req.session
+    ? req.session.destroy(err =>
+        err
+          ? res.status(400).json({ message: 'Could not log out' })
+          : res.json({ message: 'logged out' })
+      )
+    : res.end();
 });
 
 module.exports = router;
