@@ -35,6 +35,7 @@ router.post('/login', async (req, res) => {
 
     const [user] = await getUserBy({ username });
     if (user && bcrypt.compareSync(password, user.password)) {
+      // eslint-disable-next-line require-atomic-updates
       req.session.loggedIn = true;
       res.status(200).json({ message: `Welcome ${user.username}` });
     } else {
